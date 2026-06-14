@@ -1,0 +1,77 @@
+---
+description: Start implementation from an approved spec as the source of truth.
+---
+
+# /spec-start
+
+Use this command to start implementation from an approved spec.
+
+## Purpose
+
+This is the explicit handoff from spec approval into implementation. It turns an approved spec into the single source of truth for execution.
+
+## Input
+
+Accept one spec path under `docs/specs/`.
+
+## Start Preconditions
+
+Refuse to start unless all of the following are true:
+
+- the file exists
+- the file path is under `docs/specs/`
+- frontmatter `status` is exactly `approved`
+- frontmatter `approved_at` is populated
+
+If any precondition fails, stop and direct the operator back to `/spec-review`.
+
+## Handoff Rules
+
+Once the preconditions pass, treat the approved spec as the single source of truth for implementation.
+
+The implementation agent must:
+
+- follow the approved scope
+- avoid inventing new scope
+- avoid bypassing the spec with hidden chat assumptions
+- treat unresolved questions as blockers unless the spec already records a safe assumption
+- keep the spec current as a living document while implementation proceeds
+
+## Routine-Update Areas During Implementation
+
+During implementation, routine updates go to:
+
+- `Execution > Progress`
+- `Execution > Decision Log`
+- `Execution > Concrete Steps`
+- `Validation > Test Results`
+
+All other sections are change-controlled and should be edited only when implementation facts, validated decisions, commands, or acceptance expectations actually change.
+
+## Ralph-Loop Style Execution Behavior
+
+After start, execution should proceed milestone by milestone without asking for trivial continuation approval between normal steps.
+
+The implementation agent should:
+
+1. read the approved spec
+2. execute the next planned work
+3. update routine-update areas as work proceeds
+4. run validation from `Validation > Test Plan`
+5. record concise proof in `Validation > Test Results`
+6. continue until the approved spec is satisfied or a real blocker appears
+
+## Output Contract
+
+When the command is allowed to proceed, it should clearly report:
+
+- that the spec is approved
+- that the spec is now the source of truth
+- that implementation is beginning
+- that routine updates must be written back into the spec during execution
+
+When the command is blocked, it should clearly report:
+
+- that implementation did not start
+- which approval precondition failed
+- that the operator must use `/spec-review` first
