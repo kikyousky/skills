@@ -2,7 +2,7 @@
 
 This repository stores reusable skills and commands for coding and daily work.
 
-## Project Structure
+## Project Structure(first level folder only)
 
 ```text
 .
@@ -14,9 +14,6 @@ This repository stores reusable skills and commands for coding and daily work.
 ├── e2e-testing-setup/
 ├── golang-backend/
 ├── spec-authoring/
-│   ├── SKILL.md
-│   ├── assets/
-│   └── references/
 └── summary/
 ```
 
