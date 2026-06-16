@@ -4,11 +4,11 @@ description: Review a drafted spec and approve or reject it before implementatio
 
 # /spec-review
 
-Use this command to review a drafted spec under `docs/specs/` and either reject it with concrete remediation notes or approve it by updating frontmatter.
+Use this command to review a draft spec under `docs/specs/` and either reject it with concrete remediation notes or approve it by updating frontmatter.
 
 ## Purpose
 
-Provide the only supported approval gate between spec drafting and implementation start.
+Provide the only supported approval gate between spec drafting and implementation start. This command is a gate, not a separate `reviewed` state.
 
 ## Input
 
@@ -25,13 +25,14 @@ Reject immediately if:
 This command has only two valid outcomes:
 
 1. **Reject**
-   - leave the spec unapproved
+   - leave the spec at `status: draft`
    - provide concrete remediation notes
    - identify missing, vague, or conflicting sections
 
 2. **Approve**
    - change frontmatter `status` to `approved`
    - set `approved_at` to the approval timestamp
+   - leave `completed_at` as `null`
    - preserve the rest of the spec except for any required review notes explicitly requested by the operator
 
 ## Deterministic Checklist
@@ -48,14 +49,22 @@ Verify these keys exist:
 - `request_type`
 - `created_at`
 - `approved_at`
+- `completed_at`
 - `source_of_truth`
 - `implementation_mode`
 
 Verify `status` is one of:
 
 - `draft`
-- `reviewed`
 - `approved`
+- `completed`
+
+Rules:
+
+- review normally starts from `draft`
+- approving a passing spec changes `draft` directly to `approved`
+- rejection keeps or returns the spec to `draft`
+- do not use a `reviewed` state
 
 ### 2. Section structure
 
@@ -72,6 +81,7 @@ Verify the spec body uses this exact structure:
 - `Validation`
   - `Test Plan`
   - `Test Results`
+- `Outcomes & Retrospective`
 
 ### 3. Purpose quality
 
@@ -121,6 +131,7 @@ Verify:
 
 - `Progress` exists and reflects a plausible draft/review state
 - `Decision Log` contains planning decisions when meaningful choices were already made
+- `Decision Log` captures course-changing discoveries with short evidence snippets when optimizer behavior, performance tradeoffs, unexpected bugs, or inverse/unapply semantics affected the approach
 - `Plan of Work` describes the intended implementation strategy in prose
 - `Concrete Steps` includes exact commands or explicitly states what must be run once the real repository commands are confirmed
 
@@ -135,6 +146,16 @@ Verify:
 
 If validation has already run, verify `Test Results` includes concise proof such as short transcripts, logs, snippets, screenshots, or URLs.
 
+### 9. Outcomes and retrospective quality
+
+Verify `Outcomes & Retrospective` exists.
+
+Rules:
+
+- for a drafted or pre-implementation spec, it may state that implementation has not started
+- for an implemented or completed spec, it must summarize outcomes, gaps, and lessons learned
+- it must compare the result against the original `Purpose / Big Picture`
+
 ## Approval Rules
 
 Approve only when all checklist items pass.
@@ -144,6 +165,7 @@ Do not approve specs with missing sections.
 Do not approve specs with vague non-GUI impact categories.
 Do not approve specs with missing or ambiguous scope boundaries.
 Do not approve specs without a real `Validation > Test Plan`.
+Do not approve specs missing `Outcomes & Retrospective`.
 Do not approve specs that leave room for silent scope expansion during implementation.
 
 ## Output Style
@@ -159,3 +181,4 @@ For approval, report:
 - overall verdict: `APPROVE`
 - confirmation that `status` was changed to `approved`
 - confirmation that `approved_at` was populated
+- confirmation that `completed_at` remains `null`

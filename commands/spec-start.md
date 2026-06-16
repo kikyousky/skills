@@ -22,8 +22,11 @@ Refuse to start unless all of the following are true:
 - the file path is under `docs/specs/`
 - frontmatter `status` is exactly `approved`
 - frontmatter `approved_at` is populated
+- frontmatter `completed_at` is `null`
 
 If any precondition fails, stop and direct the operator back to `/spec-review`.
+
+When all preconditions pass, implementation may begin. Leave `status` as `approved` and `completed_at` as `null` until validation and retrospective work are done.
 
 ## Handoff Rules
 
@@ -36,6 +39,7 @@ The implementation agent must:
 - avoid bypassing the spec with hidden chat assumptions
 - treat unresolved questions as blockers unless the spec already records a safe assumption
 - keep the spec current as a living document while implementation proceeds
+- record course-changing discoveries in `Execution > Decision Log` with short evidence snippets when optimizer behavior, performance tradeoffs, unexpected bugs, or inverse/unapply semantics affect the approach
 
 ## Routine-Update Areas During Implementation
 
@@ -45,8 +49,9 @@ During implementation, routine updates go to:
 - `Execution > Decision Log`
 - `Execution > Concrete Steps`
 - `Validation > Test Results`
+- `Outcomes & Retrospective`
 
-All other sections are change-controlled and should be edited only when implementation facts, validated decisions, commands, or acceptance expectations actually change.
+All other sections are change-controlled and should be edited only when implementation facts, validated decisions, commands, or acceptance expectations actually change. Update `Outcomes & Retrospective` at major milestones or completion to compare the result against the original purpose and capture gaps or lessons learned.
 
 ## Ralph-Loop Style Execution Behavior
 
@@ -59,7 +64,9 @@ The implementation agent should:
 3. update routine-update areas as work proceeds
 4. run validation from `Validation > Test Plan`
 5. record concise proof in `Validation > Test Results`
-6. continue until the approved spec is satisfied or a real blocker appears
+6. update `Outcomes & Retrospective` at major milestones or completion
+7. when the approved spec is satisfied, validation is complete, and retrospective is written, set frontmatter `status` to `completed` and populate `completed_at`
+8. continue until the approved spec is satisfied or a real blocker appears
 
 ## Output Contract
 
@@ -69,6 +76,7 @@ When the command is allowed to proceed, it should clearly report:
 - that the spec is now the source of truth
 - that implementation is beginning
 - that routine updates must be written back into the spec during execution
+- that outcomes and retrospective notes must be written before completion
 
 When the command is blocked, it should clearly report:
 

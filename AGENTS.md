@@ -19,7 +19,7 @@ This repository stores reusable skills and commands for coding and daily work.
 
 ## Skills
 
-- `spec-authoring`: Use before implementation for new apps, feature work, bug fixes, and refactors that need a clear executable spec. For complex changes, write specs to the target project at `docs/specs/{YYYY-MM-DD}-{slug}.md`, review them, and do not implement until frontmatter has `status: approved`.
+- `spec-authoring`: Use before implementation for new apps, feature work, bug fixes, and refactors that need a clear executable spec. For complex changes, write specs to the target project at `docs/specs/{YYYY-MM-DD}-{slug}.md`, approve them through `/spec-review`, and start implementation through `/spec-start`.
 - `golang-backend`: Use for Go backend architecture, package boundaries, validation, JSON decoding, config access, naming, and complexity checks.
 - `e2e-testing-setup`: Use when setting up or running Playwright E2E tests in an isolated Docker Compose environment.
 - `e2e-testing-develop`: Use when developing or debugging Playwright tests, Page Object Models, traces, artifacts, flaky tests, and reports.

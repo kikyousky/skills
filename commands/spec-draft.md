@@ -19,7 +19,7 @@ Turn a raw request into a repository-aware executable spec draft using the `spec
 
    `docs/specs/{YYYY-MM-DD}-{slug}.md`
 
-5. Keep the resulting frontmatter status at `draft` or `reviewed`.
+5. Keep the resulting frontmatter status at `draft`.
 6. Stop after draft creation. Do not approve the spec. Do not start implementation.
 
 ## Input Expectations
@@ -48,4 +48,4 @@ The command succeeds only when:
 - exactly one dated spec file is created or updated in `docs/specs/`
 - the file follows the `spec-authoring` bundled `assets/template.md`
 - the file is self-contained and reviewable
-- the status is `draft` or `reviewed`
+- the status is `draft`
