@@ -1,6 +1,6 @@
 ---
 name: spec-authoring
-description: Author a self-contained executable spec before implementation. Use whenever a request involves a new app, feature, bug fix, refactor, multi-file change, behavior change, contract/API change, config/dependency change, or non-trivial validation, even if the user does not explicitly ask for a spec.
+description: Author a self-contained executable spec before implementation. Use for new apps, substantial features, risky bug fixes, broad refactors, multi-file behavior changes, API/contract changes, dependency/config changes with runtime impact, or work needing non-trivial validation. Skip for small localized edits, documentation-only tweaks, command/skill text updates, and obvious single-file maintenance.
 ---
 
 # Spec Authoring
@@ -39,6 +39,17 @@ Produce a self-contained spec that lets a stateless agent understand:
 The spec must be detailed enough that implementation can begin from the approved file without depending on hidden chat context.
 
 ## Required Workflow
+
+### 0. Decide whether a spec is warranted
+
+Skip this skill for trivial or low-risk work where a spec would add process overhead without improving correctness, such as:
+
+- small localized edits with obvious acceptance criteria
+- documentation-only tweaks
+- command or skill text updates
+- formatting, typo fixes, or mechanical maintenance
+
+Use the skill when the work has meaningful design uncertainty, user-visible behavior changes, multi-file implementation risk, persistent data impact, external integrations, security implications, or non-trivial validation needs.
 
 ### 1. Inspect the target repository first
 

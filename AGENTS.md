@@ -13,17 +13,15 @@ This repository stores reusable skills and commands for coding and daily work.
 ├── e2e-testing-develop/
 ├── e2e-testing-setup/
 ├── golang-backend/
-├── spec-authoring/
-└── summary/
+└── spec-authoring/
 ```
 
 ## Skills
 
-- `spec-authoring`: Use before implementation for new apps, feature work, bug fixes, and refactors that need a clear executable spec. For complex changes, write specs to the target project at `docs/specs/{YYYY-MM-DD}-{slug}.md`, approve them through `/spec-review`, and start implementation through `/spec-start`.
+- `spec-authoring`: Use before implementation for new apps, substantial features, risky bug fixes, broad refactors, multi-file behavior changes, API/contract changes, dependency/config changes with runtime impact, or work needing non-trivial validation. Skip for small localized edits, documentation-only tweaks, command/skill text updates, and obvious single-file maintenance. For complex changes, write specs to the target project at `docs/specs/{YYYY-MM-DD}-{slug}.md`, approve them through `/spec-review`, and start implementation through `/spec-start`.
 - `golang-backend`: Use for Go backend architecture, package boundaries, validation, JSON decoding, config access, naming, and complexity checks.
 - `e2e-testing-setup`: Use when setting up or running Playwright E2E tests in an isolated Docker Compose environment.
 - `e2e-testing-develop`: Use when developing or debugging Playwright tests, Page Object Models, traces, artifacts, flaky tests, and reports.
-- `summary`: Use when asked to summarize the current session into a Markdown file or merge a session summary into an existing file.
 
 ## Standard Skill Format
 
