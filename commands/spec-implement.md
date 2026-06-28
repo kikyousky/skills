@@ -1,10 +1,10 @@
 ---
-description: Start implementation from an approved spec as the source of truth.
+description: Implement an approved spec as the source of truth.
 ---
 
-# /spec-start
+# /spec-implement
 
-Use this command to start implementation from an approved spec.
+Use this command to begin implementation from an approved spec.
 
 ## Purpose
 
@@ -16,7 +16,7 @@ Accept one spec path under `docs/specs/`.
 
 ## Start Preconditions
 
-Refuse to start unless all of the following are true:
+Refuse to implement unless all of the following are true:
 
 - the file exists
 - the file path is under `docs/specs/`
@@ -39,13 +39,15 @@ The implementation agent must:
 - avoid bypassing the spec with hidden chat assumptions
 - treat unresolved questions as blockers unless the spec already records a safe assumption
 - keep the spec current as a living document while implementation proceeds
-- record course-changing discoveries in `Execution > Decision Log` with short evidence snippets when optimizer behavior, performance tradeoffs, unexpected bugs, or inverse/unapply semantics affect the approach
+- record unexpected behaviors, bugs, optimizations, or insights in `Execution > Surprises & Discoveries` with concise evidence
+- record course-changing decisions in `Execution > Decision Log` with short evidence snippets when optimizer behavior, performance tradeoffs, unexpected bugs, or inverse/unapply semantics affect the approach
 
 ## Routine-Update Areas During Implementation
 
 During implementation, routine updates go to:
 
 - `Execution > Progress`
+- `Execution > Surprises & Discoveries`
 - `Execution > Decision Log`
 - `Execution > Concrete Steps`
 - `Validation > Test Results`
@@ -55,18 +57,19 @@ All other sections are change-controlled and should be edited only when implemen
 
 ## Ralph-Loop Style Execution Behavior
 
-After start, execution should proceed milestone by milestone without asking for trivial continuation approval between normal steps.
+After implementation starts, execution should proceed milestone by milestone without asking for trivial continuation approval between normal steps.
 
 The implementation agent should:
 
 1. read the approved spec
 2. execute the next planned work
-3. update routine-update areas as work proceeds
+3. update `Execution > Progress` at every stopping point, splitting partially completed work into done vs. remaining work when needed
 4. run validation from `Validation > Test Plan`
-5. record concise proof in `Validation > Test Results`
-6. update `Outcomes & Retrospective` at major milestones or completion
-7. when the approved spec is satisfied, validation is complete, and retrospective is written, set frontmatter `status` to `completed` and populate `completed_at`
-8. continue until the approved spec is satisfied or a real blocker appears
+5. record unexpected findings in `Execution > Surprises & Discoveries` and decisions in `Execution > Decision Log`
+6. record concise proof in `Validation > Test Results`
+7. update `Outcomes & Retrospective` at major milestones or completion
+8. when the approved spec is satisfied, validation is complete, and retrospective is written, set frontmatter `status` to `completed` and populate `completed_at`
+9. continue until the approved spec is satisfied or a real blocker appears
 
 ## Output Contract
 

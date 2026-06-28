@@ -50,8 +50,6 @@ Verify these keys exist:
 - `created_at`
 - `approved_at`
 - `completed_at`
-- `source_of_truth`
-- `implementation_mode`
 
 Verify `status` is one of:
 
@@ -71,10 +69,15 @@ Rules:
 Verify the spec body uses this exact structure:
 
 - `Purpose / Big Picture`
-- `Context and Orientation`
 - `Implementation Impact`
+  - `Database / Schema`
+  - `GUI / UX`
+  - `API / Contracts`
+  - `Config / Environment`
+  - `Dependencies`
 - `Execution`
   - `Progress`
+  - `Surprises & Discoveries`
   - `Decision Log`
   - `Plan of Work`
   - `Concrete Steps`
@@ -90,12 +93,10 @@ Verify the purpose explains:
 - why the work matters
 - what new behavior exists after the change
 - how to observe the result
+- what is in scope
+- what is intentionally out of scope
 
-### 4. Context quality
-
-Verify the context section names relevant repository paths and gives enough orientation for a novice.
-
-### 5. Implementation impact coverage
+### 4. Implementation impact coverage
 
 Verify all five categories are present:
 
@@ -113,40 +114,42 @@ Rules:
 
 Reject the spec if non-GUI impact sections are vague, generic, or hand-wavy.
 
-### 6. Scope boundaries
+### 5. Scope boundaries
 
 Verify the spec states what is in scope and what is intentionally out of scope.
 
 Rules:
 
-- the boundary may live in `Purpose / Big Picture`, `Context and Orientation`, or `Execution > Plan of Work`
+- the boundary should live in `Purpose / Big Picture`
 - included work must be concrete enough that an implementer can tell what belongs in this change
 - excluded work must be explicit enough to prevent silent scope expansion during implementation
 
 Reject the spec if the intended change could expand silently because the boundaries are missing, vague, or contradictory.
 
-### 7. Execution quality
+### 6. Execution quality
 
 Verify:
 
-- `Progress` exists and reflects a plausible draft/review state
+- `Progress` exists and reflects the actual current state with granular checkbox items
+- `Progress` documents stopping points, including partially completed tasks split into done vs. remaining work when needed
+- `Surprises & Discoveries` exists and captures unexpected behaviors, bugs, optimizations, or insights with concise evidence when any were discovered
 - `Decision Log` contains planning decisions when meaningful choices were already made
 - `Decision Log` captures course-changing discoveries with short evidence snippets when optimizer behavior, performance tradeoffs, unexpected bugs, or inverse/unapply semantics affected the approach
 - `Plan of Work` describes the intended implementation strategy in prose
 - `Concrete Steps` includes exact commands or explicitly states what must be run once the real repository commands are confirmed
 
-### 8. Validation quality
+### 7. Validation quality
 
 Verify:
 
 - `Validation > Test Plan` exists
 - the test plan includes automated tests and agent-executed QA where relevant
-- expected behavior or outputs are stated
+- required checks are concrete enough that completion is objective
 - `Validation > Test Results` exists even if validation has not run yet
 
 If validation has already run, verify `Test Results` includes concise proof such as short transcripts, logs, snippets, screenshots, or URLs.
 
-### 9. Outcomes and retrospective quality
+### 8. Outcomes and retrospective quality
 
 Verify `Outcomes & Retrospective` exists.
 

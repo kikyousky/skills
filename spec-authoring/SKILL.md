@@ -84,7 +84,7 @@ During authoring, the file must end with:
 
 The full lifecycle is `draft -> approved -> completed`.
 
-`/spec-review` is the approval gate: it reviews `draft`, leaves failures as `draft`, and promotes passing specs directly to `approved` with `approved_at` populated. `/spec-start` begins implementation from an `approved` spec without changing status. Implementation changes the spec to `completed` with `completed_at` populated only after validation and `Outcomes & Retrospective` are done.
+`/spec-review` is the approval gate: it reviews `draft`, leaves failures as `draft`, and promotes passing specs directly to `approved` with `approved_at` populated. `/spec-implement` begins implementation from an `approved` spec without changing status. Implementation changes the spec to `completed` with `completed_at` populated only after validation and `Outcomes & Retrospective` are done.
 
 ## Assumptions and Unknowns
 
@@ -104,4 +104,4 @@ If the assumption affects approval, say so clearly.
 
 ## Handoff
 
-After drafting or updating the spec, report the spec path and direct the operator to run `/spec-review <path>` for approval. Implementation must wait until `/spec-start <path>` is run against a spec whose frontmatter has `status: approved` and a populated `approved_at`.
+After drafting or updating the spec, report the spec path and direct the operator to run `/spec-review <path>` for approval. Implementation must wait until `/spec-implement <path>` is run against a spec whose frontmatter has `status: approved` and a populated `approved_at`.

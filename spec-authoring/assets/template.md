@@ -6,8 +6,6 @@ request_type: <new-app|feature|bugfix|refactor|other>
 created_at: <YYYY-MM-DDTHH:MM:SSZ>
 approved_at: null
 completed_at: null
-source_of_truth: true
-implementation_mode: spec-first
 ---
 
 # <Short action-oriented title>
@@ -26,7 +24,7 @@ Document every expected code, data, contract, config, and dependency impact befo
 
 ### Database / Schema
 
-State the exact persistence impact because schema changes are durable and hard to undo. Name tables, columns, indexes, constraints, migrations, seeds, and data backfills.
+State the exact persistence impact because schema changes are durable and hard to undo. Name tables, columns, indexes, constraints, migrations, seeds, and data backfills. When creating or altering tables, include the actual SQL that will run, not only ORM model changes or prose descriptions.
 
 Example:
 
@@ -159,8 +157,22 @@ Define how success will be proven before implementation starts, then record what
 
 ### Test Plan
 
-Specify required automated and agent-executed checks before work begins so completion is objective.
+Specify required automated and agent-executed checks before work begins so completion is objective. State what to test, how to test it, and whether each check is a unit test, API integration test, E2E test, migration/schema check, typecheck, lint, or manual/agent QA.
 
+Example:
+
+- Unit test: `npm test -- tests/unit/projectArchivePolicy.test.ts`
+  Verify `canEditProject`, `canCreateTask`, and `canRestoreProject` return the expected decisions for active projects, archived projects, admins, and non-admins.
+- API integration test: `npm test -- tests/api/projects.test.ts`
+  Verify `GET /api/projects` defaults to active projects, `archived=true` returns archived projects, archive/unarchive endpoints require admin, and creating a task in an archived project returns `409 PROJECT_ARCHIVED`.
+- Migration/schema check: `npm run prisma:migrate:test`
+  Verify the migration creates `archived_at`, `archived_by_id`, the foreign key, and the active/archived workspace indexes using the expected SQL.
+- E2E test: `npm run test:e2e -- projects-archive.spec.ts`
+  Verify an admin can archive a project from settings, the project moves to the archived filter, archived detail pages are read-only, and restore makes task creation available again.
+- Typecheck/lint: `npm run typecheck` and `npm run lint`
+  Verify the new response fields, route handlers, and UI code satisfy repository quality gates.
+- Agent QA: run the app locally and exercise the archive/restore flow in a browser.
+  Capture the tested browser path, user role, and any screenshots or trace links needed to prove the visible behavior.
 
 ### Test Results
 

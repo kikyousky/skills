@@ -22,6 +22,44 @@ Turn a raw request into a repository-aware executable spec draft using the `spec
 5. Keep the resulting frontmatter status at `draft`.
 6. Stop after draft creation. Do not approve the spec. Do not start implementation.
 
+## Required Frontmatter
+
+The draft must include exactly the frontmatter keys from `spec-authoring/assets/template.md`:
+
+- `title`
+- `slug`
+- `status`
+- `request_type`
+- `created_at`
+- `approved_at`
+- `completed_at`
+
+For a new draft, use `status: draft`, `approved_at: null`, and `completed_at: null`.
+
+## Required Structure
+
+The draft must follow the current template section order exactly:
+
+- `Purpose / Big Picture`
+- `Implementation Impact`
+  - `Database / Schema`
+  - `GUI / UX`
+  - `API / Contracts`
+  - `Config / Environment`
+  - `Dependencies`
+- `Execution`
+  - `Progress`
+  - `Surprises & Discoveries`
+  - `Decision Log`
+  - `Plan of Work`
+  - `Concrete Steps`
+- `Validation`
+  - `Test Plan`
+  - `Test Results`
+- `Outcomes & Retrospective`
+
+Replace the template's example content with target-project facts. Preserve the integrated guidance style only when it helps the spec remain readable; do not leave generic placeholders as final content.
+
 ## Input Expectations
 
 The operator should provide:
@@ -38,8 +76,10 @@ If details are missing, inspect the repository first and convert minor gaps into
 - Do not skip repository inspection.
 - Do not omit implementation-impact categories. Use `none` where appropriate.
 - Do not leave non-GUI impact categories vague.
+- Do not omit `Execution > Surprises & Discoveries`; write `none yet` if no discoveries exist in a draft.
+- Do not omit `Outcomes & Retrospective`; write that implementation has not started yet for a draft.
 - Do not mark the spec `approved`.
-- Do not invoke `/spec-start`, `/start-work`, or any implementation flow.
+- Do not invoke `/spec-implement`, `/start-work`, or any implementation flow.
 
 ## Output Contract
 
@@ -49,3 +89,4 @@ The command succeeds only when:
 - the file follows the `spec-authoring` bundled `assets/template.md`
 - the file is self-contained and reviewable
 - the status is `draft`
+- `approved_at` and `completed_at` are `null`
