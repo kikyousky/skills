@@ -28,20 +28,6 @@ If any precondition fails, stop and direct the operator back to `/spec-review`.
 
 When all preconditions pass, implementation may begin. Leave `status` as `approved` and `completed_at` as `null` until validation and retrospective work are done.
 
-## Handoff Rules
-
-Once the preconditions pass, treat the approved spec as the single source of truth for implementation.
-
-The implementation agent must:
-
-- follow the approved scope
-- avoid inventing new scope
-- avoid bypassing the spec with hidden chat assumptions
-- treat unresolved questions as blockers unless the spec already records a safe assumption
-- keep the spec current as a living document while implementation proceeds
-- record unexpected behaviors, bugs, optimizations, or insights in `Execution > Surprises & Discoveries` with concise evidence
-- record course-changing decisions in `Execution > Decision Log` with short evidence snippets when optimizer behavior, performance tradeoffs, unexpected bugs, or inverse/unapply semantics affect the approach
-
 ## Routine-Update Areas During Implementation
 
 During implementation, routine updates go to:
@@ -59,17 +45,41 @@ All other sections are change-controlled and should be edited only when implemen
 
 After implementation starts, execution should proceed milestone by milestone without asking for trivial continuation approval between normal steps.
 
+The implementation agent must not stop merely because one milestone is complete, tests are partly passing, context is getting long, or a convenient summary point has been reached. The default behavior is to finish the entire approved spec in the current turn. The only valid reasons to stop before completion are a real blocker, a required user decision, missing credentials/access, an unsafe/destructive action requiring approval, or validation that cannot be completed in the current environment.
+
 The implementation agent should:
 
 1. read the approved spec
-2. execute the next planned work
-3. update `Execution > Progress` at every stopping point, splitting partially completed work into done vs. remaining work when needed
-4. run validation from `Validation > Test Plan`
-5. record unexpected findings in `Execution > Surprises & Discoveries` and decisions in `Execution > Decision Log`
-6. record concise proof in `Validation > Test Results`
-7. update `Outcomes & Retrospective` at major milestones or completion
-8. when the approved spec is satisfied, validation is complete, and retrospective is written, set frontmatter `status` to `completed` and populate `completed_at`
-9. continue until the approved spec is satisfied or a real blocker appears
+2. create or maintain a local task checklist covering every item in the spec's `Plan of Work`, `Acceptance Criteria`, and `Validation > Test Plan`
+3. execute planned work until the checklist is complete or a valid blocker appears
+4. after each milestone, immediately continue to the next incomplete checklist item instead of asking whether to proceed
+5. update `Execution > Progress` at every stopping point, splitting partially completed work into done vs. remaining work when needed
+6. run validation from `Validation > Test Plan`
+7. treat any failing validation as implementation work: diagnose the failure, fix in-scope bugs, rerun the relevant validation, and repeat until it passes or a valid blocker/out-of-scope defect is proven
+8. record unexpected findings in `Execution > Surprises & Discoveries` and decisions in `Execution > Decision Log`
+9. record concise proof in `Validation > Test Results`
+10. update `Outcomes & Retrospective` at major milestones or completion
+11. when the approved spec is satisfied, validation is complete, and retrospective is written, set frontmatter `status` to `completed` and populate `completed_at`
+12. continue until the approved spec is satisfied or a valid blocker appears
+
+Failed tests, type checks, linters, build commands, smoke checks, or manual validation steps are not completion points. The implementation agent must inspect the failure, determine whether it is caused by the current spec work, and fix every in-scope bug discovered during validation before stopping.
+
+The agent may stop with failing validation only when the failure is proven to be outside the approved scope, caused by unavailable credentials/services/environment, requires a user decision, or requires an unsafe/destructive action that needs approval. In that case, document the evidence, remaining failures, and exact next action in `Validation > Test Results` and `Execution > Progress`.
+
+## Completion Gate
+
+The command is not complete, and the agent must keep working in the same turn, until all of the following are true:
+
+- every in-scope item from `Plan of Work` is implemented or explicitly marked not done with a blocker
+- every `Acceptance Criteria` item is satisfied or explicitly marked blocked with evidence
+- every feasible command or check from `Validation > Test Plan` has been run
+- every in-scope bug discovered during validation has been fixed and the relevant validation has been rerun
+- `Validation > Test Results` records what passed, what failed, what was fixed after failure, and what could not run
+- `Execution > Progress` has no ambiguous remaining work
+- `Outcomes & Retrospective` states the final outcome, known gaps, and follow-up work
+- frontmatter `status` is `completed` and `completed_at` is populated, unless a valid blocker prevents completion
+
+If a valid blocker prevents completion, the final response must identify the blocker, the exact remaining checklist items, and the next action needed from the operator. Do not present a partial milestone as finished.
 
 ## Output Contract
 

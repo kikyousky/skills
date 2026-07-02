@@ -159,6 +159,8 @@ Define how success will be proven before implementation starts, then record what
 
 Specify required automated and agent-executed checks before work begins so completion is objective. State what to test, how to test it, and whether each check is a unit test, API integration test, E2E test, migration/schema check, typecheck, lint, or manual/agent QA.
 
+Before writing the test plan, seek references in the target project's context for how that project is tested: existing test scripts, README/AGENTS.md/Claude.md/developer docs, CI config, framework conventions, and any repo-specific validation commands. Base the plan on those references instead of inventing generic commands.
+
 Example:
 
 - Unit test: `npm test -- tests/unit/projectArchivePolicy.test.ts`
